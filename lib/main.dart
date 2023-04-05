@@ -1,61 +1,52 @@
-import 'package:atividade2/resultado.dart';
+import 'package:atividade2/Resultado.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-void main() {
-  runApp(MaterialApp(
-    home: const Calculo(),
-    theme: ThemeData(hintColor: Colors.green, primaryColor: Colors.white),
-  ));
-}
+void main() => runApp(const MyApp());
 
-class Calculo extends StatefulWidget {
-  const Calculo({Key? key}) : super(key: key);
-
+class MyApp extends StatelessWidget{
+  const MyApp({super.key});
+  @override
   Widget build(BuildContext context) {
-    final GoRouter router = GoRouter(routes: [
-      GoRoute(
-          name: 'home',
-          path: '/',
-          builder: (context, state) => const Calculo(),
-          routes: [
-            GoRoute(
-                name: 'Resultado',
-                path: 'Resultado/:altura/:peso/:idade/:sexo',
-                builder: (context, state) {
-                  state.queryParams.forEach(
-                    (key, value) {
-                      print("$key:$value");
-                    },
-                  );
-                  return Resultado(altura: state.params["altura"]!);
-                }),
-          ])
-    ]);
+    final GoRouter _router = GoRouter(
+      routes: [
+        GoRoute(name: "/",
+        path: "/",
+        builder: (context, state) => const Calculo(),
+        routes: [
+          GoRoute(
+            name: "Resultado",
+            path: "Resultado/:altura",
+            builder: (context, state) => Resultado(altura: state.params["altura"]!,
+    peso: state.queryParams["peso"]!,
+    idade: state.queryParams["idade"]!,
+    sexo: state.queryParams["sexo"]!, ),
+            )  
+          ],
+        ),
+      ],
+    );
+
     return MaterialApp.router(
-      routerConfig : router,
-      title:"Resultado"
+      routerConfig: _router,
+      title: 'Calculo IMC',
     ) ;
   }
-  @override
-  State<Calculo> createState() => _CalculoState();
 }
-
-class _CalculoState extends State<Calculo> {
-  var txtAltura =
+class Calculo extends StatelessWidget{
+  const Calculo({super.key});
+  @override
+  Widget build(BuildContext context) {
+    var txtAltura =
       TextEditingController(); 
   var txtPeso =
       TextEditingController(); 
   var txtIdade = TextEditingController();
   String txtSexo = "Masculino";
-
-  @override
-  Widget build(BuildContext context) {
-    return (Scaffold(
-        appBar: AppBar(
-          title: const Text('Cálculos Saudáveis'),
-        ),
-        body: Column(
+    return Scaffold(
+      appBar: AppBar(title: Text('Coloque as informacões')
+      ),
+      body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Icon(
@@ -124,10 +115,8 @@ class _CalculoState extends State<Calculo> {
                           padding: const EdgeInsets.all(20.0),
                           child: DropdownButton<String>(
                             value: txtSexo,
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                txtSexo = newValue!;
-                              });
+                            onChanged: (String? newValue){
+                              txtSexo = newValue!;
                             },
                             items: <String>['Masculino', 'Feminino']
                                 .map<DropdownMenuItem<String>>((String value) {
@@ -155,7 +144,7 @@ class _CalculoState extends State<Calculo> {
               ],
             )
           ],
-        )));
+        )
+      );
   }
-
 }
