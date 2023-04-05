@@ -36,13 +36,28 @@ class Resultado extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       body: Center(
-        child: Column(
+       child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('IMC: $IMCformat'),
-            Text('IGC: $IGCformat'),
+            Container(
+              color: Colors.black.withOpacity(0.7), 
+              padding: EdgeInsets.all(16.0), 
+              child: Column(
+                children: [
+                  Text(
+                    'IMC: $IMCformat',
+                    style: TextStyle(fontSize: 24.0, color: Colors.white),
+                  ),
+                  Text(
+                    'IGC: $IGCformat',
+                    style: TextStyle(fontSize: 24.0, color: Colors.white), 
+                  ),
+                ],
+              ),
+            ),
           ],
-        ),
+        )
+
       ),
     );
   }
