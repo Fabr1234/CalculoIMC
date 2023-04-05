@@ -2,6 +2,9 @@ import 'package:atividade2/Resultado.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+
+// Fabrício Terra de Lima e Andressa Tavares
+
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget{
